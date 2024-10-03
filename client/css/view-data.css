@@ -1,7 +1,6 @@
-/*since I'm not great with styling, there are notes on effects 
-  I looked up soley I can remember what they do*/
+/*same header, nav css as landing page*/
 
-  header {
+header {
     text-align: center;
     padding: 20px;
 }
@@ -36,6 +35,17 @@ h1 {
     background-color: forestgreen;
 }
 
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.5rem;   /*rm: root em - adjusts font size reltive to root element font size*/
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: whitesmoke;
+    background-color: forestgreen;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 body::before {        /*pseudo-element used to create overlay effect on top of background image*/
     content: '';      /*creates pseudo-element, empty string*/
     position: fixed;
@@ -57,19 +67,42 @@ body{
 
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
-.main-text {
-    font-family: 'Arial', sans-serif;
-    font-size: 1.5rem;
-    line-height: 1.6;
-    color: blueviolet;
-    background-color: whitesmoke;
+.table-container {
+    width: 70%;
+    margin: 0 auto; /*center table-container*/
+    display: flex;
+    justify-content: center;
+}
+table {
+    background-color: rgba(255, 255, 255, 0.9); /*slight transparency*/
+    width: 100%;
+    border-collapse: collapse;                    /*merge borders*/
+}
+
+tbody tr {
+    background-color: lightgrey;
+}
+thead {
+    background-color: forestgreen;
+    color: whitesmoke;
+}
+
+.table th, .table td {
+    padding: 15px 25px;
     text-align: center;
-    width: 50vw;
-    padding: 3rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /*shadow*/
-    border-radius: 15px; /*rounded corners*/
+    border: none;
+    border-bottom: 1px solid #ccc; /*Add borders between rows*/
+}
+
+.table th {
+    padding-bottom: 20px;
+}
+
+td {
+    font-size: 20px;
 }
