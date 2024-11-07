@@ -20,8 +20,6 @@ $("#submit").click(function() {
         email:email
     };
 
-    console.log("hello");
-
     $.ajax({
         url: restaurantUrl + "/write-record",
         type: "post",
