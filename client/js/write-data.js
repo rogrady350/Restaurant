@@ -1,6 +1,6 @@
 //submit form
 $("#submit").click(function() {
-    alert("Submit button was pressed");
+    alert("Reservation made successfully");
 });
 
 //clear entire form
