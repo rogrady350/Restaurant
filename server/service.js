@@ -5,6 +5,7 @@ const path = require('path');
 const DB_FILE = path.join(__dirname + "/files/data.txt");
 
 var services = function(app) {
+    //server side post to add data (write-data page)
     app.post('/write-record', function(req, res){
         var id = "rest" + Date.now();
 
@@ -51,6 +52,33 @@ var services = function(app) {
                     res.send(JSON.stringify({msg: "SUCCESS"}));
                 }
             });
+        }
+    });
+
+    //server side get for retrieving data (view-data page)
+    app.get('/get-records', function(req, res){
+        //1: if statement to check if file exists
+        if(fs.existsSync(DB_FILE)) {
+            //2.A: Read in current database
+            fs.readFile(DB_FILE, "utf-8", function(err, data) {
+                //2.B: send back err msg if there is an error
+                if(err) {
+                    response.send(JSON.stringify({msg: err}));
+                } else {
+                    //2.C: parse data variable
+                    restaurantData = JSON.parse(data);
+
+                    //send message and data back to client
+                    res.send(JSON.stringify({
+                        msg: "SUCCESS", 
+                        data: restaurantData
+                    }));
+                }
+            });
+        }else {
+            //3.A: declare empty array
+            restaurantData = []
+
         }
     });
 };

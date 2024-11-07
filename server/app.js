@@ -1,3 +1,4 @@
+//server
 const express = require('express');  //pull in express library
 const path = require('path');  //path library
 const bodyParser = require('body-parser');

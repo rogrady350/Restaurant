@@ -20,6 +20,7 @@ $("#submit").click(function() {
         email:email
     };
 
+    //client side post to add data
     $.ajax({
         url: restaurantUrl + "/write-record",
         type: "post",
