@@ -79,6 +79,11 @@ var services = function(app) {
             //3.A: declare empty array
             restaurantData = []
 
+            //3.B send back empty array with message
+            res.send(JSON.stringify({
+                msg: "SUCCESS", 
+                data: restaurantData
+            }));
         }
     });
 };

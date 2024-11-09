@@ -19,7 +19,7 @@ services(app);
 
 var port = 5000; //port where it is running
 
-//Listen (web server launches and waits to be called)
+//Listener (web server launches and waits to be called)
 var server = app.listen(port, function(err){
     if(err) throw err;
 
