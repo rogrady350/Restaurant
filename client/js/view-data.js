@@ -33,12 +33,12 @@ function showTable(reservationTable) {
 
     reservationTable.forEach(data =>  {
         htmlString += "<tr>";
-            htmlString += "<td>" + data.ID + "</td>";
+            htmlString += "<td>" + data.id + "</td>";
             htmlString += "<td>" + data.name + "</td>";
             htmlString += "<td>" + data.date + "</td>";
             htmlString += "<td>" + data.time + "</td>";
             htmlString += "<td>" + data.requests + "</td>";
-            htmlString += "<td>" + data.number + "</td>";
+            htmlString += "<td>" + data.phone + "</td>";
             htmlString += "<td>" + data.email + "</td>";
         htmlString += "</tr>";
     });
@@ -46,4 +46,4 @@ function showTable(reservationTable) {
     $("#reservationTable").html(htmlString);
 }
 
-showTable();   //populate table on load
+getReservations();   //populate table on load
