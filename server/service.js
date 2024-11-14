@@ -71,10 +71,11 @@ var services = function(app) {
                     //send message and data back to client
                     res.send(JSON.stringify({
                         msg: "SUCCESS", 
-                        data: restaurantData
+                        data: restaurantData //array of JSON objects
                     }));
                 }
             });
+        //if file doesn't exist
         }else {
             //3.A: declare empty array
             restaurantData = []
@@ -87,5 +88,38 @@ var services = function(app) {
         }
     });
 };
+
+//server side for deleting data
+app.get('/delete-record', function(req, res){
+    //1: if statement to check if file exists
+    if(fs.existsSync(DB_FILE)) {
+        //2.A: Read in current database
+        fs.readFile(DB_FILE, "utf-8", function(err, data) {
+            //2.B: send back err msg if there is an error
+            if(err) {
+                response.send(JSON.stringify({msg: err}));
+            } else {
+                //2.C: parse data variable
+                restaurantData = JSON.parse(data);
+
+                //send message and data back to client
+                res.send(JSON.stringify({
+                    msg: "SUCCESS", 
+                    data: restaurantData //array of JSON objects
+                }));
+            }
+        });
+    //if file doesn't exist
+    }else {
+        //3.A: declare empty array
+        restaurantData = []
+
+        //3.B send back empty array with message
+        res.send(JSON.stringify({
+            msg: "SUCCESS", 
+            data: restaurantData
+        }));
+    }
+});
 
 module.exports = services;
