@@ -28,7 +28,7 @@ var services = function(app) {
                 if(err) {
                     response.send(JSON.stringify({msg: err}));
                 } else {
-                    restaurantData = JSON.parse(data);
+                    var restaurantData = JSON.parse(data);
 
                     restaurantData.push(reservationData);
 
@@ -66,7 +66,7 @@ var services = function(app) {
                     response.send(JSON.stringify({msg: err}));
                 } else {
                     //2.C: parse data variable
-                    restaurantData = JSON.parse(data);
+                    var restaurantData = JSON.parse(data);
 
                     //send message and data back to client
                     res.send(JSON.stringify({
@@ -78,7 +78,7 @@ var services = function(app) {
         //if file doesn't exist
         }else {
             //3.A: declare empty array
-            restaurantData = []
+            var restaurantData = []
 
             //3.B send back empty array with message
             res.send(JSON.stringify({
@@ -90,17 +90,19 @@ var services = function(app) {
 };
 
 //server side for deleting data
-app.get('/delete-record', function(req, res){
-    //1: if statement to check if file exists
+app.delete('/delete-record', function(req, res){
+    reservationId = req.body.id //1. access id to be deleted from request body
+
+    //if statement to check if file exists
     if(fs.existsSync(DB_FILE)) {
-        //2.A: Read in current database
+        //2. Read in current data from data.txt file
         fs.readFile(DB_FILE, "utf-8", function(err, data) {
-            //2.B: send back err msg if there is an error
+            //send back err msg if there is an error
             if(err) {
                 response.send(JSON.stringify({msg: err}));
             } else {
-                //2.C: parse data variable
-                restaurantData = JSON.parse(data);
+                //3. parse data int JSON object
+                var restaurantData = JSON.parse(data);
 
                 //send message and data back to client
                 res.send(JSON.stringify({
@@ -111,15 +113,24 @@ app.get('/delete-record', function(req, res){
         });
     //if file doesn't exist
     }else {
-        //3.A: declare empty array
+        //declare empty array
         restaurantData = []
 
-        //3.B send back empty array with message
+        //send back empty array with message
         res.send(JSON.stringify({
             msg: "SUCCESS", 
             data: restaurantData
         }));
     }
+
+    //4. Loop through the data array to find index of id to be deleted
+
+
+    //5. Remove index from array
+
+
+    //6. Write altered array to file
+
 });
 
 module.exports = services;

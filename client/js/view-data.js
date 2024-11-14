@@ -4,7 +4,7 @@ function getReservations() {
         url: restaurantUrl + "/get-records",
         type: "get",
         success: function(response) {
-            responseData = JSON.parse(response);  //1. parse response variable
+            var responseData = JSON.parse(response);  //1. parse response variable
             //2. test responseData
             if (responseData.msg == "SUCCESS") {
                 showTable(responseData.data); // 3. send to showTable
@@ -36,20 +36,28 @@ function showTable(reservationTable) {
     });
 
     $("#reservationTable").html(htmlString);
+
+    //listerner for delete button (function runs when delete-btn clicked)
+    $("#reservationTable").on("click", ".delete-btn", function() {
+        var reservationId = $(this).data("id"); //get data-id value
+        deleteReservation(reservationId);       //delete row with specified id
+    });
+
 }
 
-//ajax functions to Delete data
-function deleteReservation() {
+//ajax functions to Delete data of specified id
+function deleteReservation(id) {
     $.ajax({
-        url: restaurantUrl + "/get-records",
-        type: "get",
+        url: restaurantUrl + "/delete-record",
+        type: "delete",
+        data: JSON.stringify({id: id}), //send specified id to server
         success: function(response) {
-            responseData = JSON.parse(response);  //1. parse response variable
-            //2. test responseData
+            var responseData = JSON.parse(response);  //parse response variable
+            //test responseData
             if (responseData.msg == "SUCCESS") {
-                showTable(responseData.data); // 3. send to showTable
+                alert("Reservation Deleted");
             } else {
-                console.log(responseData.msg); //4. if not, log .msg
+                console.log(responseData.msg);
             }
         },
         error: function(err) {
