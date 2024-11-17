@@ -41,7 +41,6 @@ function showTable(reservationTable) {
 //listerner for delete button (function runs when delete-btn clicked)
 $("#reservationTable").on("click", ".delete-btn", function() {
     var reservationId = $(this).data("id"); //get data-id value
-    console.log("Delete button clicked, ID:", reservationId); // Debug log id
     deleteReservation(reservationId);       //delete row with specified id
 });
 
@@ -50,7 +49,7 @@ function deleteReservation(id) {
     $.ajax({
         url: restaurantUrl + "/delete-record",
         type: "delete",
-        data: JSON.stringify({id: id}), //send specified id to server
+        data: { id }, //send specified id to server (as JSON object)
         success: function(response) {
             var responseData = JSON.parse(response);  //parse response variable
             //test responseData
