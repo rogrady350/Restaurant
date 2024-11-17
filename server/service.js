@@ -90,7 +90,8 @@ var services = function(app) {
 
     //server side for deleting data
     app.delete('/delete-record', function(req, res){
-        reservationId = req.body.id //1. access id to be deleted from request body
+        console.log("Request body:", req.body); // Debug log request body
+        var reservationId = req.body.id //1. access id to be deleted from request body
 
         //check if file exists
         if(fs.existsSync(DB_FILE)) {

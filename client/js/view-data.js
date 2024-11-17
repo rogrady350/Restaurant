@@ -36,14 +36,14 @@ function showTable(reservationTable) {
     });
 
     $("#reservationTable").html(htmlString);
-
-    //listerner for delete button (function runs when delete-btn clicked)
-    $("#reservationTable").on("click", ".delete-btn", function() {
-        var reservationId = $(this).data("id"); //get data-id value
-        deleteReservation(reservationId);       //delete row with specified id
-    });
-
 }
+
+//listerner for delete button (function runs when delete-btn clicked)
+$("#reservationTable").on("click", ".delete-btn", function() {
+    var reservationId = $(this).data("id"); //get data-id value
+    console.log("Delete button clicked, ID:", reservationId); // Debug log id
+    deleteReservation(reservationId);       //delete row with specified id
+});
 
 //ajax functions to Delete data of specified id
 function deleteReservation(id) {
@@ -56,6 +56,7 @@ function deleteReservation(id) {
             //test responseData
             if (responseData.msg == "SUCCESS") {
                 alert("Reservation Deleted");
+                getReservations() //repopulate table
             } else {
                 console.log(responseData.msg);
             }
