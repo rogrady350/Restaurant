@@ -55,7 +55,6 @@ function deleteReservation(id) {
             //test responseData
             if (responseData.msg == "SUCCESS") {
                 alert("Reservation Deleted");
-                getReservations() //repopulate table
             } else {
                 console.log(responseData.msg);
             }
