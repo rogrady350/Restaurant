@@ -92,54 +92,41 @@ var services = function(app) {
     app.delete('/delete-record', function(req, res){
         var reservationId = req.body.id; //1. access id to be deleted from request body
 
-        //check if file exists
-        if(fs.existsSync(DB_FILE)) {
-            //2. Read in current data from data.txt file
-            fs.readFile(DB_FILE, "utf-8", function(err, data) {
-                //send back err msg if there is an error
-                if(err) {
-                    res.send(JSON.stringify({msg: err}));
+        //2. Read in current data from data.txt file
+        fs.readFile(DB_FILE, "utf-8", function(err, data) {
+            //send back err msg if there is an error
+            if(err) {
+                res.send(JSON.stringify({msg: err}));
+            } else {
+                //3. parse data into JSON object
+                var restaurantData = JSON.parse(data);
+
+                //4. find index of reservation id to be deleted
+                var index = restaurantData.findIndex(record => record.id == reservationId);
+
+                //check if id was found
+                if (index == -1) {
+                    //if not found, send msg
+                    res.send(JSON.stringify({ msg: "Reservation ID not found" }));
                 } else {
-                    //3. parse data into JSON object
-                    var restaurantData = JSON.parse(data);
+                    //5. If found, remove index from array
+                    restaurantData.splice(index, 1);
 
-                    //4. find index of reservation id to be deleted
-                    var index = restaurantData.findIndex(record => record.id == reservationId);
-
-                    //check if id was found
-                    if (index == -1) {
-                        //if not found, send msg
-                        res.send(JSON.stringify({ msg: "Reservation ID not found" }));
-                    } else {
-                        //5. If found, remove index from array
-                        restaurantData.splice(index, 1);
-
-                        //6. Write altered array to file
-                        fs.writeFile(DB_FILE, JSON.stringify(restaurantData), "utf-8", function(err){
-                            if(err) {
-                                res.send(JSON.stringify({msg: err}));
-                            } else {
-                                //send success message and updated data back to client
-                                res.send(JSON.stringify({
-                                    msg: "SUCCESS", 
-                                    data: restaurantData //updated array of JSON objects
-                                }));
-                            }
-                        });
-                    }  
-                }
-            });
-        //if file doesn't exist
-        }else {
-            //declare empty array
-            restaurantData = []
-
-            //send back empty array with message
-            res.send(JSON.stringify({
-                msg: "SUCCESS", 
-                data: restaurantData
-            }));
-        }
+                    //6. Write altered array to file
+                    fs.writeFile(DB_FILE, JSON.stringify(restaurantData), "utf-8", function(err){
+                        if(err) {
+                            res.send(JSON.stringify({msg: err}));
+                        } else {
+                            //send success message and updated data back to client
+                            res.send(JSON.stringify({
+                                msg: "SUCCESS", 
+                            }));
+                        }
+                    });
+                }  
+            }
+        });
+        
     });
 };
 
