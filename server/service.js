@@ -1,6 +1,10 @@
 const { response } = require('express');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
 
 const DB_FILE = path.join(__dirname + "/files/data.txt");
 

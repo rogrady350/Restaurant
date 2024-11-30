@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            Browse Reservations
+        </title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        
+        <script src="./js/config.js"></script>
+        <script src='./js/browse-data.js'></script>
+    </head>
+  
+    <body data-ng-app="browseDataApp" data-ng-controller="browseDataCtrl">
+        <div style="font-size: 30px;">
+            <div>
+                <label for="name">Name:</label>
+                <label id="name">{{ obj.name }}</label>
+            </div>
+      
+            <div>
+                <label for="date">Date:</label>
+                <label id="date">{{ obj.date }}</label>
+            </div>
+      
+            <div>
+                <label for="time">Time:</label>
+                <label id="time">{{ obj.time }}</label>
+            </div>
+      
+            <div>
+                <label for="requests">Requests:</label>
+                <label id="requests">{{ obj.requests }}</label>
+            </div>
+            
+            <div>
+                <label for="phone">Phone:</label>
+                <label id="phone">{{ obj.phone }}</label>
+            </div>
+
+            <div>
+                <label for="email">Email:</label>
+                <label id="email">{{ obj.email }}</label>
+              </div>
+      
+            <div>
+              <div>
+                    <button id="previous" data-ng-click="changeReservation(-1)" data-ng-hide="hidePrev">&lt&lt&lt Previous;</button>
+              </div>
+
+              <div>
+                    <button id="next" data-ng-click="changeReservation(1)" data-ng-hide="hideNext">Next &gt&gt&gt;</button>
+              </div>
+            </div>
+          </div>
+    </body>
+</html>
