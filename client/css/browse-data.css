@@ -35,17 +35,6 @@ h1 {
     background-color: forestgreen;
 }
 
-h2 {
-    font-family: 'Arial', sans-serif;
-    font-size: 2.5rem;   /*rm: root em - adjusts font size reltive to root element font size*/
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: whitesmoke;
-    background-color: forestgreen;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 body::before {        /*pseudo-element used to create overlay effect on top of background image*/
     content: '';      /*creates pseudo-element, empty string*/
     position: fixed;
@@ -63,46 +52,40 @@ body{
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;   /*keeps background fixed during scrolling*/
+    font-size: 2rem;
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+    margin: 30px auto 30px;
+    padding: 20px;
+    max-width: 700px;
+    color: whitesmoke;
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.table-container {
-    width: 70%;
-    margin: 0 auto; /*center table-container*/
-    display: flex;
-    justify-content: center;
-}
-table {
-    background-color: rgba(255, 255, 255, 0.9); /*slight transparency*/
-    width: 100%;
-    border-collapse: collapse;                    /*merge borders*/
+label {
+    width: 30%;         /*Control the label width */
+    text-align: left;
+    margin-right: 10px; /*Space between label and input*/
+    font-weight: bold;
+    color:forestgreen ;
 }
 
-tbody tr {
-    background-color: lightgrey;
-}
-thead {
-    background-color: forestgreen;
+span {
     color: whitesmoke;
 }
 
-.table th, .table td {
-    padding: 15px 25px;
-    text-align: center;
+button {
+    background-color: forestgreen;
+    color: whitesmoke;
+    padding: 10px 15px;
     border: none;
-    border-bottom: 1px solid #ccc; /*Add borders between rows*/
+    border-radius: 5px;
 }
 
-.table th {
-    padding-bottom: 20px;
-}
-
-td {
-    font-size: 20px;
+.button-container {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
 }

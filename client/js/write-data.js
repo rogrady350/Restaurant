@@ -1,7 +1,5 @@
 //submit form
 $("#submit").click(function() {
-    //alert("Reservation made successfully");
-
     var name = $('#name').val();
     var date = $('#date').val();
     var time = $('#time').val();

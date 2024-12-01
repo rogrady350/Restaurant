@@ -1,55 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>Browse Reservations</title>
+        <title>
+            Browse Reservations
+        </title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <link rel="stylesheet" href="./css/browse-data.css">
-        <script src="./js/config.js"></script>
-        <script src='./js/browse-data.js'></script>
+        <link rel="stylesheet" href="/client/css/browse-data.css">
+        <script src="/client/js/config.js"></script>
+        <script src='/client/js/browse-data.js'></script>
     </head>
   
     <body data-ng-app="browseDataApp" data-ng-controller="browseDataCtrl">
-        <div style="font-size: 30px;">
+        <header>
+            <!--same links as landing page-->
+            <nav class="nav">
+                <div class="link-container">
+                    <a class="link" href="/home">Home</a>
+                    <a class="link" href="/write-data">Enter Data</a>
+                    <a class="link" href="/view-data">View Data</a>
+                    <a class="link" href="/browse-data">Browse Data</a>
+                </div>
+            </nav>
+    
+            <h1>Browse Data</h1>
+        </header>
+        
+        <main>
             <div>
                 <label for="name">Name:</label>
-                <label id="name">{{ obj.name }}</label>
+                <span id="name">{{ obj.name }}</span>
             </div>
       
             <div>
                 <label for="date">Date:</label>
-                <label id="date">{{ obj.date }}</label>
+                <span id="date">{{ obj.date }}</span>
             </div>
       
             <div>
                 <label for="time">Time:</label>
-                <label id="time">{{ obj.time }}</label>
+                <span id="time">{{ obj.time }}</span>
             </div>
       
             <div>
                 <label for="requests">Requests:</label>
-                <label id="requests">{{ obj.requests }}</label>
+                <span id="requests">{{ obj.requests }}</span>
             </div>
             
             <div>
                 <label for="phone">Phone:</label>
-                <label id="phone">{{ obj.phone }}</label>
+                <span id="phone">{{ obj.phone }}</span>
             </div>
 
             <div>
                 <label for="email">Email:</label>
-                <label id="email">{{ obj.email }}</label>
-              </div>
-      
-            <div>
-              <div>
-                    <button id="previous" data-ng-click="changeReservation(-1)" data-ng-hide="hidePrev">&lt&lt&lt Previous;</button>
-              </div>
-
-              <div>
-                    <button id="next" data-ng-click="changeReservation(1)" data-ng-hide="hideNext">Next &gt&gt&gt;</button>
-              </div>
+                <span id="email">{{ obj.email }}</span>
             </div>
-          </div>
+      
+            <div class="button-container">
+                <button id="previous" data-ng-click="changeReservation(-1)" data-ng-hide="hidePrev">&lt&lt&lt Previous;</button>
+                <button id="next" data-ng-click="changeReservation(1)" data-ng-hide="hideNext">Next &gt&gt&gt;</button>
+            </div>
+        </main>
     </body>
 </html>
