@@ -5,6 +5,14 @@ const bodyParser = require('body-parser');
 
 const app = express(); //core function places express library in app
 
+const cors = require('cors');
+app.use(cors());
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next(); 
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false})); //takes json object
 app.use("/client", express.static(path.resolve(__dirname + "/../client/"))); //may not need last slash?

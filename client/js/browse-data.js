@@ -12,7 +12,7 @@ app.controller('browseDataCtrl', function($scope, $http){
         }).then(function(response){
             //Successfully connected to the server
             if(response.data.msg === "SUCCESS") {
-                reservations = response.data;
+                reservations = response.data.data;
                 $scope.obj = reservations[activeReservation];
                 $scope.showHide();
             } else {
