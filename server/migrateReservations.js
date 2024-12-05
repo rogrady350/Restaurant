@@ -8,7 +8,7 @@ const dbUrl = process.env.DB_URI || "mongodb://127.0.0.1";
 //Define the database server
 const dbClient = new MongoClient(dbUrl);
 
-//function to load reservations from text file
+//function to initialize reservations table
 async function migrateReservations(filePath) {
     try {
         //read and parse file
@@ -23,8 +23,21 @@ async function migrateReservations(filePath) {
         const coll = db.collection('reservations');
 
         //insert reservations
+        const data = await coll.find().toArray();
+    
+        if(data.length === 0) {
+            var reservations = restaurantData.all;
+            await coll.insertMany(reservations);
+            console.log("Added seed records");
+        } else {
+            console.log("Reservations collection already has data. No new records added.");
+        }
 
-    } catch {
-
+        await conn.close();
+    } catch (err) {
+        await conn.close();
+        console.error(err);
     }
-}
+};
+
+module.exports = migrateReservations;

@@ -1,5 +1,4 @@
 //Bring in Mongo and Reservations
-const restaurantReservations = require('');
 const { MongoClient, ObjectId } = require('mongodb');
 
 //Define Database URL
@@ -27,7 +26,7 @@ var services = function(app) {
             const db = conn.db("restaurant");
             const coll = db.collection("reservations");
 
-            await coll.insertOne(newReservation);
+            await coll.insertOne(reservationData);
             await conn.close();
            return res.send(JSON.stringify({ msg: "SUCCESS" }));
         } catch (error) {
@@ -47,6 +46,23 @@ var services = function(app) {
         
     });
 
-};
+    //For refreshing the reservations table
+    app.post('/refreshReservations', async function(req, res) {
+    // console.log("In refresh spells");
+        try {
+            const conn = await dbClient.connect();
+            const db = conn.db("restaurant");
+            const coll = db.collection('reservations');
+            await coll.drop();
+            console.log("Dropped database");
+            await dbClient.close();
+            initializeDatabase();
+            return res.status(200).send(JSON.stringify({msg:"SUCCESS"}));        
+        } catch(err) {
+            console.error(err);
+            return res.status(200).send(JSON.stringify({msg:"Error: " + err}));
+        }
+    });
+}
 
-module.exports = services;
+module.exports = servicesDb;
