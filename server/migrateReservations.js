@@ -1,3 +1,5 @@
+console.log("Migration script started");
+
 //Bring in Mongo and fs to read text file
 const fs = require('fs');
 const { MongoClient } = require('mongodb');
@@ -10,13 +12,14 @@ const dbClient = new MongoClient(dbUrl);
 
 //function to initialize reservations table
 async function migrateReservations(filePath) {
+    var conn;
     try {
         //read and parse file
         var fileData = fs.readFileSync(filePath, 'utf-8');
         var restaurantData = JSON.parse(fileData);
 
         //connect to mongo
-        const conn = await dbClient.connect();
+        conn = await dbClient.connect();
 
         //get db and collection
         const db = conn.db('restaurant');
@@ -32,12 +35,24 @@ async function migrateReservations(filePath) {
         } else {
             console.log("Reservations collection already has data. No new records added.");
         }
-
-        await conn.close();
     } catch (err) {
-        await conn.close();
         console.error(err);
+    } finally {
+        if (conn) {
+            await conn.close(); // Ensure connection is only closed if it was created
+            console.log("Database connection closed.");
+        }
     }
 };
 
-module.exports = migrateReservations;
+if (require.main === module) {
+    const filePath = './server/files/data.txt';
+    (async () => {
+        try {
+            await migrateReservations(filePath);
+            console.log("Migration completed successfully.");
+        } catch (err) {
+            console.error("Error during migration:", err);
+        }
+    })();
+}

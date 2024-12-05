@@ -22,8 +22,9 @@ var router = require('./router.js'); //bring in router code
 router(app);
 
 //Service listeners (data processes)
-var services = require('./service.js');
+var services = require('./servicesDb.js');
 services(app);
+
 
 var port = 5000; //port where it is running
 

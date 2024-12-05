@@ -8,7 +8,7 @@ const dbUrl = process.env.DB_URI || "mongodb://127.0.0.1";
 const dbClient = new MongoClient(dbUrl);
 
 //CRUD methods
-var services = function(app) {
+var servicesDb = function(app) {
     //server side post to add data (write-data page)
     app.post('/write-record', async function(req, res){
        var reservationData = {
