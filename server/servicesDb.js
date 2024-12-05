@@ -1,5 +1,4 @@
 //Bring in Mongo and Reservations
-const restaurantReservations = require('notsure');
 const { MongoClient, ObjectId } = require('mongodb');
 
 //Define Database URL
@@ -66,24 +65,4 @@ var servicesDb = function(app) {
     });
 }
 
-//To Initialize the reservations table
-var initializeDatabase = async function() {
-    try {
-        const conn = await dbClient.connect();
-        const db = conn.db("restaurant");
-        const coll = db.collection('reservations');
-        const data = await coll.find().toArray();
-
-        if(data.length === 0) {
-            var reservations = notsure.all;
-            await coll.insertMany(reservations);
-            console.log("Added seed records");
-        }
-
-        await conn.close();
-    } catch(err) {
-        console.log(err);
-    }
-}
-
-module.exports = { servicesDb, initializeDatabase };
+module.exports = servicesDb;
