@@ -7,7 +7,7 @@ function getReservations() {
             var responseData = JSON.parse(response);  //1. parse response variable
             //2. test responseData
             if (responseData.msg == "SUCCESS") {
-                showTable(responseData.data); // 3. send to showTable
+                showTable(responseData.reservations); // 3. send to showTable
             } else {
                 console.log(responseData.msg); //4. if not, log .msg
             }
@@ -24,14 +24,15 @@ function showTable(reservationTable) {
 
     reservationTable.forEach(data =>  {
         htmlString += "<tr>";
-            htmlString += "<td>" + data.id + "</td>";
+            htmlString += "<td>" + data._id + "</td>";
             htmlString += "<td>" + data.name + "</td>";
             htmlString += "<td>" + data.date + "</td>";
             htmlString += "<td>" + data.time + "</td>";
+            htmlString += "<td>" + data.guests + "</td>";
             htmlString += "<td>" + data.requests + "</td>";
             htmlString += "<td>" + data.phone + "</td>";
             htmlString += "<td>" + data.email + "</td>";
-            htmlString += "<td><button class='delete-btn' data-id='" + data.id + "'>Delete</button></td>";   
+            htmlString += "<td><button class='delete-btn' data-id='" + data._id + "'>Delete</button></td>";   
         htmlString += "</tr>";
     });
 
@@ -49,7 +50,7 @@ function deleteReservation(id) {
     $.ajax({
         url: restaurantUrl + "/delete-record",
         type: "delete",
-        data: { id }, //send specified id to server (as JSON object)
+        data: { _id: id }, //send specified id to server
         success: function(response) {
             var responseData = JSON.parse(response);  //parse response variable
             //test responseData

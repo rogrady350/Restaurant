@@ -1,4 +1,4 @@
-//Bring in Mongo and Reservations
+//Bring in Mongo
 const { MongoClient, ObjectId } = require('mongodb');
 
 //Define Database URL
@@ -10,6 +10,7 @@ const dbClient = new MongoClient(dbUrl);
 //CRUD methods
 var servicesDb = function(app) {
     //server side post to add data (write-data page)
+    var conn;
     app.post('/write-record', async function(req, res){
        var reservationData = {
             name: req.body.name, 
@@ -22,45 +23,62 @@ var servicesDb = function(app) {
         }
 
         try{
-            const conn = await dbClient.connect();
+            conn = await dbClient.connect();
             const db = conn.db("restaurant");
             const coll = db.collection("reservations");
 
             await coll.insertOne(reservationData);
-            await conn.close();
-           return res.send(JSON.stringify({ msg: "SUCCESS" }));
+
+            return res.send(JSON.stringify({ msg: "SUCCESS" }));
         } catch (error) {
-            await conn.close();
             return res.send(JSON.stringify({ msg: "Error" + error }));
+        } finally {
+            if (conn) {
+                await conn.close();
+            }
         }
+
     });
 
     //server side get for retrieving data (view-data page)
-    app.get('/get-records', function(req, res){
-        
+    app.get('/get-records', async function(req, res){
+        var conn;
+        try{
+            conn = await dbClient.connect();
+            const db = conn.db("restaurant");
+            const coll = db.collection("reservations");
+
+            const data = await coll.find().toArray();
+
+            return res.send(JSON.stringify({ msg: "SUCCESS", reservations: data }));
+        } catch (error) {
+            return res.send(JSON.stringify({ msg: "Error" + error }));
+        } finally {
+            if (conn) {
+                await conn.close();
+            }
+        }
     });
 
     //server side for deleting data
-    app.delete('/delete-record', function(req, res){
-        var reservationId = req.body.id; //1. access id to be deleted from request body
-        
-    });
+    app.delete('/delete-record', async function(req, res){
+        var conn;
+        var reservationId = req.query._id ;
 
-    //For refreshing the reservations table
-    app.post('/refreshReservations', async function(req, res) {
-    // console.log("In refresh spells");
-        try {
-            const conn = await dbClient.connect();
+        try{
+            conn = await dbClient.connect();
             const db = conn.db("restaurant");
-            const coll = db.collection('reservations');
-            await coll.drop();
-            console.log("Dropped database");
-            await dbClient.close();
-            initializeDatabase();
-            return res.status(200).send(JSON.stringify({msg:"SUCCESS"}));        
-        } catch(err) {
-            console.error(err);
-            return res.status(200).send(JSON.stringify({msg:"Error: " + err}));
+            const coll = db.collection("reservations");
+
+            await coll.deleteOne({ _id: reservationId });
+
+            return res.send(JSON.stringify({ msg: "SUCCESS" }));
+        } catch (error) {
+            return res.send(JSON.stringify({ msg: "Error" + error }));
+        } finally {
+            if (conn) {
+                await conn.close();
+            }
         }
     });
 }
