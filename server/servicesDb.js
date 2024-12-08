@@ -60,7 +60,32 @@ var servicesDb = function(app) {
         }
     });
 
-    //server side for deleting data
+    //server side view reservation by date
+    app.get("/get-reservationByDate", async function(req, res) {
+        var search = (req.query.date === "") ? {} : { type: req.query.date };
+
+        try {
+            const conn = await dbClient.connect();
+            const db = conn.db("restaurant");
+            const coll = db.collection("reservations");
+
+            const data = await coll.find(search).toArray();
+
+            await conn.close();
+
+            return res.send(JSON.stringify({ msg: "SUCCESS", reservations: data }));
+        } catch (error) {
+            await conn.close();
+            return res.send(JSON.stringify({ msg: "Error" + error }));
+        }
+    });
+
+    //server side update reservation
+    app.put('/update-spell', async function(req, res) {
+        
+    });
+
+    //server side for deleting data (not working, need to finalize)
     app.delete('/delete-record', async function(req, res){
         var conn;
         var reservationId = req.query._id ;
