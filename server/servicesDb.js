@@ -9,7 +9,7 @@ const dbClient = new MongoClient(dbUrl);
 
 //CRUD methods
 var servicesDb = function(app) {
-    //server side post to add data (write-data page)
+    //POST - server to add data (write-data page)
     var conn;
     app.post('/write-record', async function(req, res){
        var reservationData = {
@@ -40,7 +40,7 @@ var servicesDb = function(app) {
 
     });
 
-    //server side get for retrieving data (view-data page)
+    //GET - server side get for retrieving data (view-data page)
     app.get('/get-records', async function(req, res){
         var conn;
         try{
@@ -60,7 +60,7 @@ var servicesDb = function(app) {
         }
     });
 
-    //server side view reservation by date
+    //GET (by date) - server side view reservation by date
     app.get("/get-reservationByDate", async function(req, res) {
         var search = (req.query.date === "") ? {} : { type: req.query.date };
 
@@ -80,12 +80,12 @@ var servicesDb = function(app) {
         }
     });
 
-    //server side update reservation
-    app.put('/update-spell', async function(req, res) {
+    //PUT - server side update reservation
+    app.put('/update-record', async function(req, res) {
         
     });
 
-    //server side for deleting data (not working, need to finalize)
+    //DELETE - server side for deleting data (not working, need to finalize)
     app.delete('/delete-record', async function(req, res){
         var conn;
         var reservationId = req.query._id ;

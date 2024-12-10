@@ -8,7 +8,7 @@
         <script src='/client/js/config.js'></script>
     </head>
 
-    <body data-ng-app="viewDataApp" data-ng-controller="viewDataCtrl">
+    <body data-ng-app="viewDataApp" data-ng-controller="viewDataCtrl" data-ng-init="hideForm=true" >
         <header>
             <!--same links as landing page-->
             <nav class="nav">
@@ -27,35 +27,95 @@
             <h2>Reservations</h2>
 
             <!--reservation table-->
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>name</th>
-                            <th>date</th>
-                            <th>time</th>
-                            <th>guests</th>
-                            <th>requests</th>
-                            <th>phone</th>
-                            <th>email</th>
-                            <th></th> <!--Column for delete button-->>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="reservation in obj">
-                            <td>{{ reservation._id }}</td>
-                            <td>{{ reservation.name }}</td>
-                            <td>{{ reservation.date }}</td>
-                            <td>{{ reservation.time }}</td>
-                            <td>{{ reservation.guests }}</td>
-                            <td>{{ reservation.requests }}</td>
-                            <td>{{ reservation.phone }}</td>
-                            <td>{{ reservation.email }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <section>
+                <div style="margin-left: 70px;">
+                    <label for="groupBy">Date</label>
+                    <select id="groupBy"
+                        data-ng-model="selectedDate"
+                        data-ng-options="name.display for date in dates"
+                        data-ng-change="redrawTable()">
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>name</th>
+                                <th>date</th>
+                                <th>time</th>
+                                <th>guests</th>
+                                <th>requests</th>
+                                <th>phone</th>
+                                <th>email</th>
+                                <th></th> <!--Column for edit button-->>
+                                <th></th> <!--Column for delete button-->>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="reservation in obj">
+                                <td>{{ reservation._id }}</td>
+                                <td>{{ reservation.name }}</td>
+                                <td>{{ reservation.date }}</td>
+                                <td>{{ reservation.time }}</td>
+                                <td>{{ reservation.guests }}</td>
+                                <td>{{ reservation.requests }}</td>
+                                <td>{{ reservation.phone }}</td>
+                                <td>{{ reservation.email }}</td>
+                                <td>
+                                    <button data-ng-click="editSpell($index)">Edit</button>
+                                </td>
+                                <td>
+                                    <button data-ng-click="deleteReservation(obj._id)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </main>
+
+        <!--hide form when not editing a reservation-->
+        <section data-ng-hide="hideForm">
+            <div style="font-size: 30px;">
+              <label data-ng-model="reservationID" hidden></label>
+              <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" data-ng-model="name">
+              </div>
+        
+              <div>
+                <label for="type">Date:</label>
+                <input type="text" id="date" data-ng-model="type">
+              </div>
+        
+              <div>
+                <label for="effect">Time:</label>
+                <input type="text" id="time" data-ng-model="effect">
+              </div>
+        
+              <div>
+                <label for="counter-spell">Guests:</label>
+                <input type="text" id="guests" data-ng-model="counter">
+              </div>
+        
+              <div style="float: left; margin-top: 30px">
+                <div style="float: left; clear:right; margin-left: 30px;">
+                  <button id="submit" data-ng-click="updateReservation()">Update</button>
+                </div>
+              </div>
+      
+              <div style="float: left; margin-top: 30px">
+                <div style="float: left; clear:right; margin-left: 30px;">
+                  <button id="cancelButton" data-ng-click="cancelUpdate()">Cancel</button>
+                </div>
+              </div>
+        
+              <div style="float: left; clear: left; margin-top: 20px; font-size: 24px; color: green">
+                {{addResults}}
+              </div>
+            </div>
+          </section>
     </body>
 </html>

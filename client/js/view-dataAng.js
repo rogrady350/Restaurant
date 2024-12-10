@@ -3,7 +3,7 @@ var reservations = [];
 var app = angular.module('viewDataApp', []);
 
 app.controller('viewDataCtrl', function($scope, $http){
-    //function to get reservations from db
+    //GET - function to retrieve all reservations from db
     $scope.get_records = function() {
         $http({
             //Send request to the server
@@ -25,8 +25,9 @@ app.controller('viewDataCtrl', function($scope, $http){
     //execute on page load
     $scope.get_records();
 
+    //GET (by type) - reload table with only reservations from a specific date
     $scope.redrawTable = function() {
-        var type = $scope.selectedType.value;
+        var date = $scope.selectedDate.value;
         
         $http({
             method: 'get',
@@ -43,27 +44,29 @@ app.controller('viewDataCtrl', function($scope, $http){
         }
     }
 
-    $scope.editSpell = function(reservationNumber) {
-        $scope.id = $scope.spells[reservationNumber]._id;
-        $scope.name = $scope.spells[reservationNumber].name;
-        $scope.date = $scope.spells[reservationNumber].date;
-        $scope.time = $scope.spells[reservationNumber][time];
-        $scope.guests = $scope.spells[reservationNumber][guests];
-        $scope.requests = $scope.spells[reservationNumber][requests];
-        $scope.phone = $scope.spells[reservationNumber][phone];
-        $scope.email = $scope.spells[reservationNumber][email];
+     //edit reservation function - prepares edit by displaying reservation details in a form
+     $scope.editReservation = function(reservationNumber) {
+        $scope.id = $scope.reservations[reservationNumber]._id;
+        $scope.name = $scope.reservations[reservationNumber].name;
+        $scope.date = $scope.reservations[reservationNumber].date;
+        $scope.time = $scope.reservations[reservationNumber][time];
+        $scope.guests = $scope.reservations[reservationNumber][guests];
+        $scope.requests = $scope.reservations[reservationNumber][requests];
+        $scope.phone = $scope.reservations[reservationNumber][phone];
+        $scope.email = $scope.reservations[reservationNumber][email];
 
         $scope.hideTable = true;
         $scope.hideForm = false;
     }
 
+    //cancel function - cancels update operation and returns to table view
     $scope.cancelUpdate = function(){
         $scope.hideTable = false;
         $scope.hideForm = true;
     }
 
-    //update reservation function
-    $scope.updateSpell = function() {
+    //PUT - function to update reservation db data  (server side not complete)
+    $scope.updateReservation = function() {
         if($scope.name === "" || $scope.date === "" || $scope.time === "" || $scope.guests === "" || $scope.phone === "" || $scope.email === "") {
             $scope.addResults = "Please fill out all fields";
             return;
@@ -71,7 +74,7 @@ app.controller('viewDataCtrl', function($scope, $http){
 
         $http({
             method: 'put',
-            url: potterURL + "/update-spell",
+            url: restaurantUrl + "/update-records",
             data: {
                 id: $scope.id,
                 name: $scope.name,
@@ -97,9 +100,9 @@ app.controller('viewDataCtrl', function($scope, $http){
         }), function(error) {
             console.log(error);
         }
-    }
+    } //end of update record function
 
-    //function to delete reservation from db
+    //DELETE - function to delete reservation from db
     $scope.deleteReservation = function(_id) {
         console.log(_id);
 
@@ -118,5 +121,25 @@ app.controller('viewDataCtrl', function($scope, $http){
             console.log(error);
         }
     }; //end of delete record function
-
 }); //End of controller
+
+//utility function to extract reservations froms pecified date
+function getTypes(reservationTableData) {
+    var dateExists;
+
+    datesArray = [{ value:"", display:"All" }];
+
+    for (var i=0; i<reservationTableData.length; i++) {
+        dateExists = datesArray.find(function (element) {
+            return element.value === reservationTableData[i].type;
+        });
+
+        if (dateExists) {
+            continue;
+        } else {
+            datesArray.push({value: reservationTableData[i].date, display: reservationTableData[i].date})
+        }
+    }
+
+    return datesArray;
+}
