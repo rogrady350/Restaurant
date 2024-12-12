@@ -13,7 +13,7 @@ app.controller('viewDataCtrl', function($scope, $http){
             //Successfully connected to the server
             if(response.data.msg === "SUCCESS") {
                 reservations = response.data.reservations;
-                $scope.obj = reservations;
+                $scope.reservations = reservations;
             } else {
                 console.log(response.data.msg);
             }
@@ -25,7 +25,7 @@ app.controller('viewDataCtrl', function($scope, $http){
     //execute on page load
     $scope.get_records();
 
-    //GET (by type) - reload table with only reservations from a specific date
+    //GET (by type) - reload table with only reservations from a specific date (needs to be fixed)
     $scope.redrawTable = function() {
         var date = $scope.selectedDate.value;
         
@@ -35,7 +35,7 @@ app.controller('viewDataCtrl', function($scope, $http){
             params: {date: date}
         }).then(function(response){
             if (response.data.msg === "SUCCESS") {
-                $scope.spells = response.data.reservations;
+                $scope.reservations = response.data.reservations;
             } else {
                 console.log(response.data.msg);
             }
@@ -102,14 +102,14 @@ app.controller('viewDataCtrl', function($scope, $http){
         }
     } //end of update record function
 
-    //DELETE - function to delete reservation from db
-    $scope.deleteReservation = function(_id) {
-        console.log(_id);
+    //DELETE - function to delete reservation from db (reservation delete works, redraw not working so table does not reload)
+    $scope.deleteReservation = function(id) {
+        console.log(id);
 
         $http({
             method: 'delete',
             url: restaurantUrl + "/delete-record",
-            params: { _id: id}
+            params: { reservationId: id}
 
         }).then(function(response){
             if(response.data.msg == "SUCCESS") {

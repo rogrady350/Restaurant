@@ -41,7 +41,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>id</th>
                                 <th>name</th>
                                 <th>date</th>
                                 <th>time</th>
@@ -54,15 +53,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="reservation in obj">
-                                <td>{{ reservation._id }}</td>
-                                <td>{{ reservation.name }}</td>
-                                <td>{{ reservation.date }}</td>
-                                <td>{{ reservation.time }}</td>
-                                <td>{{ reservation.guests }}</td>
-                                <td>{{ reservation.requests }}</td>
-                                <td>{{ reservation.phone }}</td>
-                                <td>{{ reservation.email }}</td>
+                            <tr ng-repeat="obj in reservations">
+                                <td>{{ obj.name }}</td>
+                                <td>{{ obj.date }}</td>
+                                <td>{{ obj.time }}</td>
+                                <td>{{ obj.guests }}</td>
+                                <td>{{ obj.requests }}</td>
+                                <td>{{ obj.phone }}</td>
+                                <td>{{ obj.email }}</td>
                                 <td>
                                     <button data-ng-click="editSpell($index)">Edit</button>
                                 </td>

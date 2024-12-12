@@ -75,27 +75,56 @@ var servicesDb = function(app) {
 
             return res.send(JSON.stringify({ msg: "SUCCESS", reservations: data }));
         } catch (error) {
-            await conn.close();
             return res.send(JSON.stringify({ msg: "Error" + error }));
-        }
+        } finally {
+            if (conn) {
+                await conn.close();
+            }
+        }  
     });
 
     //PUT - server side update reservation
     app.put('/update-record', async function(req, res) {
-        
+        var updateData = {
+            $set: {
+                name: req.body.name,
+                date: req.body.date,
+                time: req.body.time,
+            }
+        };
+
+        try {
+            const conn = await dbClient.connect();
+            const db = conn.db("restaurant");
+            const coll = db.collection("reservations");
+
+            const search = {_id: ObjectId.createFromHexString(req.body.id)};
+
+            await coll.updateOne(search, updateData);
+
+            return res.send(JSON.stringify({ msg: "SUCCESS" }));
+        } catch(err) {
+            console.log(err)
+            return res.send(JSON.stringify({ msg: "Error" + error }));
+        } finally {
+            if (conn) {
+                await conn.close();
+            }
+        }
     });
 
-    //DELETE - server side for deleting data (not working, need to finalize)
+    //DELETE - server side for deleting data (delete works, table is not reloaded. redraw does not work)
     app.delete('/delete-record', async function(req, res){
         var conn;
-        var reservationId = req.query._id ;
 
         try{
             conn = await dbClient.connect();
             const db = conn.db("restaurant");
             const coll = db.collection("reservations");
 
-            await coll.deleteOne({ _id: reservationId });
+            const search = {_id: ObjectId.createFromHexString(req.query.reservationId)};
+
+            await coll.deleteOne(search);
 
             return res.send(JSON.stringify({ msg: "SUCCESS" }));
         } catch (error) {
