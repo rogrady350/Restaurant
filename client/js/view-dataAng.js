@@ -14,6 +14,8 @@ app.controller('viewDataCtrl', function($scope, $http){
             if(response.data.msg === "SUCCESS") {
                 reservations = response.data.reservations;
                 $scope.reservations = reservations;
+                $scope.dates = getDates(reservations);
+                $scope.selectedDate = $scope.dates[0];
             } else {
                 console.log(response.data.msg);
             }
@@ -49,11 +51,11 @@ app.controller('viewDataCtrl', function($scope, $http){
         $scope.id = $scope.reservations[reservationNumber]._id;
         $scope.name = $scope.reservations[reservationNumber].name;
         $scope.date = $scope.reservations[reservationNumber].date;
-        $scope.time = $scope.reservations[reservationNumber][time];
-        $scope.guests = $scope.reservations[reservationNumber][guests];
-        $scope.requests = $scope.reservations[reservationNumber][requests];
-        $scope.phone = $scope.reservations[reservationNumber][phone];
-        $scope.email = $scope.reservations[reservationNumber][email];
+        $scope.time = $scope.reservations[reservationNumber].time;
+        $scope.guests = $scope.reservations[reservationNumber].guests;
+        $scope.requests = $scope.reservations[reservationNumber].requests;
+        $scope.phone = $scope.reservations[reservationNumber].phone;
+        $scope.email = $scope.reservations[reservationNumber].email;
 
         $scope.hideTable = true;
         $scope.hideForm = false;
@@ -91,9 +93,12 @@ app.controller('viewDataCtrl', function($scope, $http){
                 $scope.redrawTable();
 
                 $scope.name = "";
-                $scope.type = "";
-                $scope.effect = "";
-                $scope.counter = "";
+                $scope.date = "";
+                $scope.time = "";
+                $scope.guests = "";
+                $scope.requests = "";
+                $scope.phone = "";
+                $scope.email = "";
             }else {
                 $scope.addResults = response.data.msg
             }
@@ -124,14 +129,14 @@ app.controller('viewDataCtrl', function($scope, $http){
 }); //End of controller
 
 //utility function to extract reservations froms pecified date
-function getTypes(reservationTableData) {
+function getDates(reservationTableData) {
     var dateExists;
 
     datesArray = [{ value:"", display:"All" }];
 
     for (var i=0; i<reservationTableData.length; i++) {
         dateExists = datesArray.find(function (element) {
-            return element.value === reservationTableData[i].type;
+            return element.value === reservationTableData[i].date;
         });
 
         if (dateExists) {

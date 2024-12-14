@@ -106,3 +106,38 @@ thead {
 td {
     font-size: 20px;
 }
+
+/* Dropdown and label styling */
+.date-selection {
+    color: whitesmoke;
+    margin-left: 70px;
+}
+
+/* Form styling */
+.form-container {
+    color: green;
+    font-size: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.add-results {
+    margin-top: 20px;
+    font-size: 24px;
+    color: green;
+}
+
+/* Button alignment */
+.form-buttons div {
+    float: left;
+    clear: right;
+    margin-left: 30px;
+}

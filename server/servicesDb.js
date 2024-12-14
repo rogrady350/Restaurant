@@ -90,6 +90,10 @@ var servicesDb = function(app) {
                 name: req.body.name,
                 date: req.body.date,
                 time: req.body.time,
+                guests: req.body.guests,
+                requests: req.body.requests,
+                phone: req.body.phone,
+                email: req.body.email
             }
         };
 
