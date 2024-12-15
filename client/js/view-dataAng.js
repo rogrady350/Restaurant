@@ -1,8 +1,8 @@
-var reservations = [];
-
 var app = angular.module('viewDataApp', []);
 
 app.controller('viewDataCtrl', function($scope, $http){
+    $scope.reservations = [];
+
     //GET - function to retrieve all reservations from db
     $scope.get_records = function() {
         $http({
@@ -27,14 +27,14 @@ app.controller('viewDataCtrl', function($scope, $http){
     //execute on page load
     $scope.get_records();
 
-    //GET (by type) - reload table with only reservations from a specific date (needs to be fixed)
+    //GET (by type) - reload table with only reservations from a specific date (or all)
     $scope.redrawTable = function() {
         var date = $scope.selectedDate.value;
         
         $http({
             method: 'get',
             url: restaurantUrl + "/get-reservationByDate",
-            params: {date: date}
+            params: { date: date === "all" ? null : date } //If all send no date filter params: {date: date}
         }).then(function(response){
             if (response.data.msg === "SUCCESS") {
                 $scope.reservations = response.data.reservations;
@@ -109,8 +109,6 @@ app.controller('viewDataCtrl', function($scope, $http){
 
     //DELETE - function to delete reservation from db (reservation delete works, redraw not working so table does not reload)
     $scope.deleteReservation = function(id) {
-        console.log(id);
-
         $http({
             method: 'delete',
             url: restaurantUrl + "/delete-record",
@@ -132,7 +130,7 @@ app.controller('viewDataCtrl', function($scope, $http){
 function getDates(reservationTableData) {
     var dateExists;
 
-    datesArray = [{ value:"", display:"All" }];
+    datesArray = [{ value:"all", display:"All" }];
 
     for (var i=0; i<reservationTableData.length; i++) {
         dateExists = datesArray.find(function (element) {

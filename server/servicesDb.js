@@ -62,7 +62,8 @@ var servicesDb = function(app) {
 
     //GET (by date) - server side view reservation by date
     app.get("/get-reservationByDate", async function(req, res) {
-        var search = (req.query.date === "") ? {} : { type: req.query.date };
+        //query db for selected date, otherwise fetch all dates
+        var search = req.query.date ? { date: req.query.date } : {};
 
         try {
             const conn = await dbClient.connect();
@@ -84,7 +85,7 @@ var servicesDb = function(app) {
     });
 
     //PUT - server side update reservation
-    app.put('/update-record', async function(req, res) {
+    app.put('/update-records', async function(req, res) {
         var updateData = {
             $set: {
                 name: req.body.name,
@@ -109,7 +110,7 @@ var servicesDb = function(app) {
             return res.send(JSON.stringify({ msg: "SUCCESS" }));
         } catch(err) {
             console.log(err)
-            return res.send(JSON.stringify({ msg: "Error" + error }));
+            return res.send(JSON.stringify({ msg: "Error" + err }));
         } finally {
             if (conn) {
                 await conn.close();

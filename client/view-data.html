@@ -4,7 +4,7 @@
         <title>View Data</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <link rel="stylesheet" href="/client/css/view-data.css">
-        <script src='/client/js/view-dataAng.js' async></script>
+        <script src='/client/js/view-dataAng.js'></script>
         <script src='/client/js/config.js'></script>
     </head>
 
@@ -27,12 +27,12 @@
             <h2>Reservations</h2>
 
             <!--reservation table-->
-            <section>
+            <section data-ng-hide="hideTable">
                 <div class="date-selection">
                     <label for="groupBy">Date</label>
                     <select id="groupBy"
                         data-ng-model="selectedDate"
-                        data-ng-options="name.value as date.display for date in dates"
+                        data-ng-options="date as date.display for date in dates"
                         data-ng-change="redrawTable()">
                     </select>
                 </div>
