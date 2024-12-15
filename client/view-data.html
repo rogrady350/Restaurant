@@ -76,7 +76,9 @@
 
         <!--hide form when not editing a reservation-->
         <section data-ng-hide="hideForm">
-            <div class="form-container">
+            <form class="form-container">
+              <h3>Update Reservation</h3>
+
               <label data-ng-model="reservationID" hidden></label>
               <div class="form-group">
                 <label for="name">Name:</label>
@@ -116,12 +118,12 @@
               <div class="form-buttons">
                 <button id="submit" data-ng-click="updateReservation()">Update</button>
                 <button id="cancelButton" data-ng-click="cancelUpdate()">Cancel</button>
-            </div>
+              </div>
         
               <div class="add-results">
                 {{addResults}}
               </div>
-            </div>
+            </form>
           </section>
     </body>
 </html>
