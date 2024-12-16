@@ -10,8 +10,8 @@ app.controller("writeDataCtrl", function($scope, $http){
         }
 
         $http({
-            method: 'put',
-            url: restaurantUrl + "/update-records",
+            method: 'post',
+            url: restaurantUrl + "/write-record",
             data: {
                 id: $scope.id,
                 name: $scope.name,
@@ -24,9 +24,7 @@ app.controller("writeDataCtrl", function($scope, $http){
             }
         }).then(function(response){
             if(response.data.msg === "SUCCESS") {
-                $scope.cancelUpdate();
-                $scope.redrawTable();
-
+                $scope.addResults = "Reservation is added!";
                 $scope.name = "";
                 $scope.date = "";
                 $scope.time = "";
@@ -45,6 +43,8 @@ app.controller("writeDataCtrl", function($scope, $http){
     $scope.addResults = "";
 
     //clear entire form
-    
+    $scope.clear = function() {
+        document.getElementById("reservation").reset();
+    }
 
 });

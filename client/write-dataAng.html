@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Data Input</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="/client/css/write-data.css">
+        <script src='/client/js/config.js'></script>
+        <script src='/client/js/write-dataAng.js'></script>
+    </head>
+
+    <body data-ng-app="writeDataApp" data-ng-controller="writeDataCtrl">
+        <header>
+            <!--same links as landing page-->
+            <nav class="nav">
+                <div class="link-container">
+                    <a class="link" href="/home">Home</a>
+                    <a class="link" href="/write-data">Enter Data</a>
+                    <a class="link" href="/view-data">View Data</a>
+                    <a class="link" href="/browse-data">Browse Data</a>
+                </div>
+            </nav>
+
+            <h1>Data Input</h1>
+        </header>
+
+        <main>
+            <h2>Make Reservation</h2>
+
+            <form id="reservation">
+                <label data-ng-model="reservationID" hidden></label>
+                <div class="form-group">
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" data-ng-model="name">
+                </div>
+          
+                <div class="form-group">
+                  <label for="type">Date:</label>
+                  <input type="text" id="date" data-ng-model="date">
+                </div>
+          
+                <div class="form-group">
+                  <label for="effect">Time:</label>
+                  <input type="text" id="time" data-ng-model="time">
+                </div>
+          
+                <div class="form-group">
+                  <label for="guests">Guests:</label>
+                  <input type="text" id="guests" data-ng-model="guests">
+                </div>
+  
+                <div class="form-group">
+                  <label for="requests">Requests:</label>
+                  <input type="text" id="requests" data-ng-model="requests">
+                </div>
+  
+                <div class="form-group">
+                  <label for="phone">Phone:</label>
+                  <input type="text" id="phone" data-ng-model="phone">
+                </div>
+  
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="text" id="email" data-ng-model="email">
+                </div>
+          
+                <div class="form-buttons">
+                  <button id="submit" data-ng-click="submit()">Submit</button>
+                  <button id="clear" data-ng-click="clear()">Clear</button>
+                </div>
+          
+                <div class="add-results">
+                  {{addResults}}
+                </div>
+              </form>
+        </main>
+    </body>
+</html>

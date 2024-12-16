@@ -11,8 +11,9 @@ var router = function(app) {
         res.status(200).sendFile(path.join(__dirname + "/../client/restaurant.html"))
     });
 
+    //currently set to use angular versions of html and js files
     app.get('/write-data', function(req, res){                       
-        res.status(200).sendFile(path.join(__dirname + "/../client/write-data.html"))
+        res.status(200).sendFile(path.join(__dirname + "/../client/write-dataAng.html"))
     });
 
     app.get('/view-data', function(req, res){                       
