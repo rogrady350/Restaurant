@@ -27,24 +27,26 @@
             <h2>Make Reservation</h2>
 
             <form id="reservation">
+                <label id="req">* Indicates required field</label>
+
                 <label data-ng-model="reservationID" hidden></label>
                 <div class="form-group">
-                  <label for="name">Name:</label>
+                  <label for="name">Name*:</label>
                   <input type="text" id="name" data-ng-model="name">
                 </div>
           
                 <div class="form-group">
-                  <label for="type">Date:</label>
-                  <input type="text" id="date" data-ng-model="date">
+                  <label for="type">Date*:</label>
+                  <input type="text" id="date" placeholder="MM/DD/YY" data-ng-model="date">
                 </div>
           
                 <div class="form-group">
-                  <label for="effect">Time:</label>
-                  <input type="text" id="time" data-ng-model="time">
+                  <label for="effect">Time*:</label>
+                  <input type="text" id="time" placeholder="HH:MM" data-ng-model="time">
                 </div>
           
                 <div class="form-group">
-                  <label for="guests">Guests:</label>
+                  <label for="guests">Guests*:</label>
                   <input type="text" id="guests" data-ng-model="guests">
                 </div>
   
@@ -54,12 +56,12 @@
                 </div>
   
                 <div class="form-group">
-                  <label for="phone">Phone:</label>
+                  <label for="phone">Phone*:</label>
                   <input type="text" id="phone" data-ng-model="phone">
                 </div>
   
                 <div class="form-group">
-                  <label for="email">Email:</label>
+                  <label for="email">Email*:</label>
                   <input type="text" id="email" data-ng-model="email">
                 </div>
           

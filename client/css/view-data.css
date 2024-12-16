@@ -82,6 +82,8 @@ table {
     background-color: rgba(255, 255, 255, 0.9); /*slight transparency*/
     width: 100%;
     border-collapse: collapse;                    /*merge borders*/
+    font-size: 1rem;
+    text-align: center;
 }
 
 tbody tr {
@@ -93,7 +95,7 @@ thead {
 }
 
 .table th, .table td {
-    padding: 15px 25px;
+    padding: 10px 10px;
     text-align: center;
     border: none;
     border-bottom: 1px solid #ccc; /*Add borders between rows*/
@@ -104,13 +106,13 @@ thead {
 }
 
 td {
-    font-size: 20px;
+    max-width: auto;    /*Limit cell width for long content*/
 }
 
 /* Dropdown and label styling */
 .date-selection {
     color: whitesmoke;
-    margin-left: 70px;
+    margin-left: 65px;
 }
 
 /* Form styling */
@@ -119,7 +121,7 @@ h3 {
 }
 
 form {
-    max-width: 600px;
+    max-width: 30%;
     margin: 0 auto;
     background-color: #f9f9f9;
     padding: 20px;
@@ -129,13 +131,14 @@ form {
 
 .form-group {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center; /*Vertically align label and input*/
     margin-bottom: 20px;
 }
 
 label {
-    width: 30%;         /*Control the label width */
+    flex: 0 0 30%;      /*Control the label width */
     text-align: left;
     margin-right: 10px; /*Space between label and input*/
     font-weight: bold;
@@ -161,4 +164,28 @@ button {
     display: flex;
     justify-content: center;
     gap: 10px
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    .form-group {
+        flex-direction: column; /*Stack labels and inputs vertically*/
+        align-items: stretch;
+    }
+
+    label {
+        flex: 0 0 auto;
+        width: 100%; /*Take full width*/
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    input {
+        flex: 1;
+        width: 100%; /*Adjust input to fill the container*/
+    }
 }
