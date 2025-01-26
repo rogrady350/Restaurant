@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false})); //takes json object
 app.use("/client", express.static(path.resolve(__dirname + "/../client/"))); //may not need last slash?
-//app.use in express is equivalent to CreateBuilder
+//app.use in express is equivalent to CreateBuilder()
 
 //Page listeners (router)
 var router = require('./router.js'); //bring in router code
@@ -30,6 +30,7 @@ services(app);
 var port = 5000; //port where it is running
 
 //Listener (web server launches and waits to be called)
+//app.listen(port, () => {...} is equivalent to Build() and Run()
 var server = app.listen(port, function(err){
     if(err) throw err;
 
