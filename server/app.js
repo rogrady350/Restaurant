@@ -1,4 +1,4 @@
-//server
+//server - equivalent to Program.cs
 const express = require('express');  //pull in express library
 const path = require('path');  //path library
 const bodyParser = require('body-parser');
@@ -16,6 +16,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false})); //takes json object
 app.use("/client", express.static(path.resolve(__dirname + "/../client/"))); //may not need last slash?
+//app.use in express is equivalent to CreateBuilder
 
 //Page listeners (router)
 var router = require('./router.js'); //bring in router code
